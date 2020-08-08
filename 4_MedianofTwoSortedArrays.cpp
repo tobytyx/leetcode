@@ -48,10 +48,50 @@ public:
     }
 };
 
+class Solution2 {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int m = nums1.size(), n = nums2.size();
+        if(m == 0) return (nums2[n/2] + nums2[(n-1)/2]) / 2.0;
+        if(n == 0) return (nums1[m/2] + nums1[(m-1)/2]) / 2.0;
+        vector<int>& A = m > n ? nums2 : nums1;
+        vector<int>& B = m > n ? nums1 : nums2;
+        m = A.size(), n = B.size();
+        int i_min = 0, i_max = m, half = (m + n + 1) / 2;
+        while(i_min <= i_max){
+            int i = (i_min + i_max) / 2;
+            int j = half - i;
+            if(i < m && A[i] <= B[j-1]){
+                i_min = i + 1;
+            }
+            else if(i > 0 && A[i-1] > B[j]){
+                i_max = i - 1;
+            }
+            else{
+                int max_left=0, min_right=0;
+                if(j == 0) max_left = A[i-1];
+                else if(i == 0) max_left = B[j-1];
+                else{
+                    max_left = A[i-1] > B[j-1] ? A[i-1] : B[j-1];
+                }
+                if((m+n)%2 == 1) return max_left;
+                if(j == n) min_right = A[i];
+                else if(i == m) min_right = B[j];
+                else{
+                    min_right = A[i] < B[j] ? A[i] : B[j];
+                }
+                return (max_left + min_right) / 2.0;
+            }
+        }
+        return 0.0;
+    }
+};
+
+
 int main(){
     vector<int> nums1 = {1,2};
     vector<int> nums2 = {3,4};
-    Solution s;
+    Solution2 s;
     printf("%lf\n", s.findMedianSortedArrays(nums1, nums2));
     return 0;
 }

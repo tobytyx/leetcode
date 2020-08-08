@@ -44,6 +44,49 @@ public:
     }
 };
 
+
+class Solution2 {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        if(l1 == NULL) return l2;
+        if(l2 == NULL) return l1;
+        ListNode *ptr1=l1, *ptr2=l2, *res_head=new ListNode(0);
+        ListNode *ptr_res = res_head;
+        int carry = 0;
+        while(ptr1!=NULL && ptr2!=NULL){
+            int cur = ptr1->val + ptr2->val + carry;
+            carry = cur / 10;
+            cur = cur % 10;
+            ptr_res->next = new ListNode(cur);
+            ptr_res = ptr_res->next;
+            ptr1 = ptr1->next;
+            ptr2 = ptr2->next;
+        }
+        while(ptr1!=NULL){
+            int cur = ptr1->val + carry;
+            carry = cur / 10;
+            cur = cur % 10;
+            ptr_res->next = new ListNode(cur);
+            ptr_res = ptr_res->next;
+            ptr1 = ptr1->next;
+        }
+        while(ptr2!=NULL){
+            int cur = ptr2->val + carry;
+            carry = cur / 10;
+            cur = cur % 10;
+            ptr_res->next = new ListNode(cur);
+            ptr_res = ptr_res->next;
+            ptr2 = ptr2->next;
+        }
+        if(carry > 0){
+            ptr_res->next = new ListNode(carry);
+        }
+        ptr_res = res_head->next;
+        delete(res_head);
+        return ptr_res;
+    }
+};
+
 int main(){
     int m = 0, n = 0;
     cin >> m;

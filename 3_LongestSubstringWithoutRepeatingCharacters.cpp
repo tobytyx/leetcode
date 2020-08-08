@@ -27,6 +27,29 @@ public:
     }
 };
 
+class Solution {
+public:
+    int lengthOfLongestSubstring2(string s) {
+        int len=s.length();
+        if(len < 2) return len;
+        int max_len = 1, low=0;
+        int map[128] = {0};
+        map[s[0]] = 1;
+        for(int i=1; i<len; i++){
+            map[s[i]]++;
+            if(map[s[i]] > 1){
+                max_len = max(max_len, i-low);
+                while(map[s[i]] > 1){
+                    map[s[low]]--;
+                    low++;
+                }
+            }
+        }
+        max_len = max(max_len, len-low);
+        return max_len;
+    }
+};
+
 int main(){
     string st;
     cin >> st;

@@ -24,6 +24,25 @@ public:
     }
 };
 
+class Solution2 {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> res;
+        int len = nums.size();
+        if(len < 2) return res;
+        unordered_map<int, int> m;
+        for(int i=0; i<len; i++){
+            if(m.find(nums[i]) != m.end()){
+                res.push_back(i);
+                res.push_back(m[nums[i]]);
+                return res;
+            }
+            m[target-nums[i]] = i;
+        }
+        return res;
+    }
+};
+
 int main(){
     int m = 0;
     cin >> m;
@@ -35,7 +54,7 @@ int main(){
     }
     int target = 0;
     cin >> target;
-    Solution s;
+    Solution2 s;
     vector<int> res =  s.twoSum(nums, target);
     for(int r: res){
         printf("%d ", r);
