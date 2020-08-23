@@ -20,7 +20,7 @@ public:
         TreeNode* pre = root;
         vector<TreeNode*> s;
         s.push_back(root);
-        while(not s.empty()){
+        while(!s.empty()){
             cur = s.back();
             s.pop_back();
             if (cur->right != NULL){
